@@ -1,0 +1,55 @@
+using System;
+
+namespace Lab_3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+
+            Console.Write("\nВведiть текстовий рядок: ");
+            string Text = Console.ReadLine();
+            string[] words = Text.Split(new Char[] { ' ', ',', '.', ':', ';', '-' });
+
+            Console.Clear();
+            Console.WriteLine("\n Ви задали наступний текстовий рядок: ");
+            Console.WriteLine(" " + Text);
+            Console.WriteLine("\n Завдання а) Видалити слова якi починаються на голосну букву.");
+            Console.WriteLine("\n УВАГА! Цифри, роздiловi знаки та однобуквовi сполучники видаленi з тексту \n до його опрацювання. Їх не можливо перетворити за заданим правилом\n");
+            string text = null;
+            string outing = null;
+            foreach (string s in words)
+            {
+                if (s.Trim() != "" && char.IsLetter(s[0]) && s.Length > 1)
+                {
+                    if ("aeiouyаеиоуяюєїй".Contains(s[0]))
+                    {
+                        outing = outing + " " + s;
+                    }
+                    else
+                        text = text + " " + s;
+                }
+            }
+            Console.WriteLine("Рядок без слiв якi починаються на голоснi букви: " + text + "\nСлова якi виключенi зi списку: " + outing);
+            outing = null;
+            int count = 0;
+            foreach (string s in words)
+            {
+                if (s.Trim() != "")
+                {
+                    if (s.Length > 1)
+                    {
+                        count++;
+                    }
+                    else
+                        outing = outing + " " + s;
+                }
+            }
+            Console.WriteLine("Кiлькiсть слiв в текстi " + count + "\nОкремi символи якi не є словами: " + outing);
+
+            Console.ReadKey();
+        }
+    }
+}
