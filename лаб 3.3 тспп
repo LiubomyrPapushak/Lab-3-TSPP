@@ -1,0 +1,62 @@
+using System;
+using System.IO;
+
+namespace Lab_3_3
+{
+    class Program
+    {
+        static bool IsLatinLetter(char c)
+        {
+            return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+        }
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+
+            Console.Write("Введiть рядок для обробки: ");
+            using (StreamWriter f = new StreamWriter("imput.txt"))
+            {
+                string s = Console.ReadLine();
+                string sw = s.Replace('і', 'i');
+                f.WriteLine(sw);
+            }
+            Console.Clear();
+            string result = null;
+            string outing = null;
+            using (StreamReader file = new StreamReader("imput.txt"))
+            {
+                string text = file.ReadLine();
+                Console.Write("Рядок записаний з файлу: " + text);
+                string[] texts = text.Split(' ', ',', '.', ':', ';', '-');
+                foreach (string word in texts)
+                {
+                    
+                    bool isLatin = true;
+                    foreach (char c in word)
+                    {
+                        if (!char.IsLetter(c) || !IsLatinLetter(c))
+                        {
+                            isLatin = false;
+                            break;
+                        }
+                    }
+                    if (!isLatin)
+                    {
+                        result += word + " ";
+                    }
+                    else
+                    {
+                        outing += word + " ";
+                    }
+                }
+            }
+            Console.WriteLine("\nРядок без слів які складаються лише з латинських літер:");
+            Console.WriteLine(result.Trim());
+            using (StreamWriter read = new StreamWriter("output.txt"))
+            {
+                read.Write("Рядок без слів які складаються лише з латинських літер:\n" + result + "Слова які виключені:\n" + outing);
+            }
+        }
+    }
+}
