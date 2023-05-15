@@ -1,0 +1,85 @@
+using System;
+using System.IO;
+namespace Lab_3_2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+            
+            using (StreamWriter f = new StreamWriter("storage.txt"))
+            {
+                Console.Write("Введiть розмір массиву чисел: ");
+                int n = int.Parse(Console.ReadLine());
+                int[] a = new int[n];
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write("a [{0}]= ", i+1);
+                    a[i] = int.Parse(Console.ReadLine());
+                    f.Write("{0} ", a[i]);
+                }
+            }
+            int[] b;
+            int size = 0;
+            using (StreamReader file = new StreamReader("storage.txt"))
+            {
+                int k = 0;
+                string text = file.ReadLine();
+                string[] newtext = text.Split(" ");
+                foreach (string c in newtext)
+                {
+                    if (!string.IsNullOrEmpty(c))
+                    {
+                        size++;
+                    }
+                }
+                b = new int[size];
+                foreach (string c in newtext)
+                {
+                    if (!string.IsNullOrEmpty(c))
+                    {
+                        b[k] = int.Parse(c);
+                        k++;
+                    }
+                }
+                Console.WriteLine("Массив до змін:");
+                for (int i = 0; i < size; i++)
+                {
+                    Console.WriteLine("a[{0}] = {1}", i, b[i]);
+                }
+                for (int i = 0; i < size; i++)
+                {
+                    if(b[i] < 0)
+                    {
+                        b[i] = Math.Abs(b[i]);
+                    }
+                    else if (b[i] % 2 == 0)
+                    {
+                        b[i] *= 2;
+                    }
+                    else
+                    {
+                        b[i]++;
+                    }
+
+                }
+            }
+            Console.WriteLine("Массив після змін:");
+            for (int i = 0; i < size; i++)
+            {
+                Console.WriteLine("a[{0}] = {1}", i, b[i]);
+            }
+            using (StreamWriter f = new StreamWriter("result.txt"))
+            {
+                
+                for (int i = 0; i < size; i++)
+                {
+                    f.Write("{0} ", b[i]);
+                }
+            }
+
+        }
+    }
+}
